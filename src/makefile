@@ -6,7 +6,7 @@ OBJ = $(SRC:.cpp=.o)
 OUT = ../libutils.a
  
 # include directories
-INCLUDES = -I. -I../include/ -I/usr/local/include -I/usr/share/boost_1_58_0/
+INCLUDES = -I. -I../include/ -I/usr/local/include 
  
 # C++ compiler flags (-g -O2 -Wall)
 CCFLAGS = -g -MD -MP -std=c++0x -Wall -c
@@ -15,7 +15,7 @@ CCFLAGS = -g -MD -MP -std=c++0x -Wall -c
 CCC = g++
  
 # library paths
-LIBS = -L/usr/share/boost_1_58_0/lib/ -lboost_serialization
+LIBS =  -lboost_serialization
  
 # compile flags
 LDFLAGS = -g
