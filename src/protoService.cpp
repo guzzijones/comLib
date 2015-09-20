@@ -4,13 +4,13 @@
 #include "protoService.h"
 
 template <typename T>
-void protoService<T>::DoWrite(const int & sock,void * data,T size){
+void protoService<T>::DoWrite(const int & sock,char * data,T size){
   T bytesWrite=0;
   std::cout << "Size to write: " << size << std::endl;
   while(bytesWrite!=size){
       T WriteThisTime;
       do{
-      WriteThisTime=send(sock,data+bytesWrite,size-bytesWrite,0); // send the message length
+      WriteThisTime=send(sock, data+bytesWrite,size-bytesWrite,0); // send the message length
       }while((WriteThisTime == -1) && (errno == EINTR));
       if(WriteThisTime<0){
       std::cout << "Write failure" << std::endl;
@@ -21,7 +21,7 @@ void protoService<T>::DoWrite(const int & sock,void * data,T size){
    }  
 }
 template <typename T>
-void protoService<T>::DoRead(const int & sock,void * data,T size){
+void protoService<T>::DoRead(const int & sock,char * data,T size){
   T bytesRead=0;
   while(bytesRead!=size){
       T readThisTime;

@@ -10,7 +10,7 @@ protocolBaseServer::protocolBaseServer(const int & sock){
   _validProtocol=true;
 }
 protocolBaseServer::protocolBaseServer(std::string ip,int port){
-   int sockfd = 0,n = 0;
+   int sockfd = 0;
    struct sockaddr_in serv_addr;
 
                                                           // data 
@@ -37,7 +37,7 @@ void protocolBaseServer::DoRead(){
 
    //read in todo
 //   std::cout << "reading length now" << std::endl;
-   protoService<int32_t>::DoRead(_sock,&dataLength,sizeof(int32_t));
+   protoService<int32_t>::DoRead(_sock,(char*)&dataLength,sizeof(int32_t));
    dataLength = ntohl(dataLength ); // Ensure host system byte order on the int;from the network will be network byte order
  //  std::cout << "data length: " << dataLength << std::endl;
    char rcvBuf[dataLength];    // Allocate a receive buffer
@@ -61,7 +61,7 @@ void protocolBaseServer::DoWrite( const std::string & inMessage){
    //read in todo
    dataLength = htonl(dataLength ); // Ensure host system byte order on the int;from the network will be network byte order
   // std::cout << "writing length now" << std::endl;
-   protoService<int32_t>::DoWrite(_sock,&dataLength,sizeof(int32_t));
+   protoService<int32_t>::DoWrite(_sock,(char*)&dataLength,sizeof(int32_t));
   // std::cout << "written length" << std::endl;
   // std::cout << "writing :" << (char*)_totalMessage.c_str() << "end" << std::endl;
    protoService<int32_t>::DoWrite(_sock,(char*)_totalMessage.c_str(),orgdataLength); // send the string dataEE
