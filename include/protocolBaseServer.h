@@ -8,6 +8,7 @@ private:
    std::string _totalMessage;
    int  _sock;
    bool _validProtocol;
+   bool testSocket();   
 protected:
 
 public:
@@ -23,6 +24,5 @@ public:
    std::string getTotalMessage()const{return _totalMessage;};
    int getSock()const{return _sock;};
    void setMessage(const std::string & in){_totalMessage=in;};
-   
 };
 #endif

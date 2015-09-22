@@ -1,13 +1,13 @@
 #include "protocolBaseServer.h"
+//create constructor no arguments to be used when it is a server
+
 protocolBaseServer::protocolBaseServer(const int & sock){
    _sock=sock;
- //  std::cout << "in protocolBaseServer" << std::endl;
-  // try{
-//   DoRead();
- //  }catch(std::exception &e){
-  //    std::cout << "Error: " << e.what() << std::endl;
-  // }
-  _validProtocol=true;
+   if(testSocket()==false){
+      throw std::runtime_error("socket not connected");
+   }
+      
+   _validProtocol=true;
 }
 protocolBaseServer::protocolBaseServer(std::string ip,int port){
    int sockfd = 0;
@@ -25,8 +25,10 @@ protocolBaseServer::protocolBaseServer(std::string ip,int port){
   serv_addr.sin_addr.s_addr = inet_addr(ip.c_str());
    if(connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr))<0)
     {
+       
       printf("\n Error : Connect Failed \n");
       _validProtocol=false;
+      throw std::runtime_error("could not connect to socket");
     }
    _validProtocol=true; 
 }
@@ -76,4 +78,20 @@ std::string protocolBaseServer::WriteRead(const std::string & in){
    return result;
 
 }
+bool protocolBaseServer::testSocket(){
+   int error = 0;
+   socklen_t len = sizeof (error);
+   int retval = getsockopt (_sock, SOL_SOCKET, SO_ERROR, &error, &len);
+   if (retval != 0) {
+       /* there was a problem getting the error code */
+       fprintf(stderr, "error getting socket error code: %s\n", strerror(retval));
+       return false;
+   }
 
+   if (error != 0) {
+       /* socket has a non zero error status */
+       fprintf(stderr, "socket error: %s\n", strerror(error));
+      return false;
+   }
+   return true;
+}
