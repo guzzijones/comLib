@@ -8,7 +8,7 @@
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/device/array.hpp>
 #include <boost/iostreams/stream.hpp>
-
+#include "protocolBaseServer.h"
 class aTodo{
   public: 
    static const unsigned _Type=0x00;
