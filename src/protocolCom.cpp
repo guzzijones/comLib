@@ -19,4 +19,15 @@ std::unique_ptr<aTodo> protocolCom::load(std::string const &s ){
 
 }
 
+std::unique_ptr<aTodo>  protocolCom::WriteRead(std::unique_ptr<aTodo> & object,std::string ip, int port){
+
+    protocolBaseServer protoConnection(ip, port);  
+    std::string objToSendStr = save(object); //save to a string
+    protoConnection.DoWrite(objToSendStr);//send string off to server; server does some work
+    protoConnection.DoRead();  //read back in the result from the server to a string in object protoConnection
+    std::string returnedObjectStr= protoConnection.getTotalMessage(); //save the read bytes to a string
+    std::unique_ptr<aTodo> objectReturned=load(returnedObjectStr);
+    return objectReturned;
+}
+
 
