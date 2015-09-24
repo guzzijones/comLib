@@ -1,5 +1,5 @@
 # source files.
-SRC = protoService.cpp protocolBaseServer.cpp 
+SRC = protoService.cpp protocolBaseServer.cpp protocolCom.cpp
  
 OBJ = $(SRC:.cpp=.o)
  
