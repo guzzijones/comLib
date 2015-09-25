@@ -13,6 +13,7 @@ protected:
 
 public:
    protocolBaseServer(std::string ip="127.0.0.1",int port =3000); 
+   ~protocolBaseServer(){};
    protocolBaseServer(const int & sock);
    //creates socket and sets two fields to be send
    //uses protoService::DoWrite to send both field
