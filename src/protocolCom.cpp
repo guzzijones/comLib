@@ -1,4 +1,13 @@
 #include "protocolCom.h"
+std::unique_ptr<aTodo>  protocolCom::WriteRead(std::unique_ptr<aTodo> & object){
+
+    protocolBaseServer protoConnection(_ip, _port);  
+    Write(object,protoConnection);
+    std::unique_ptr<aTodo> objectReturned=Read(protoConnection);
+    return objectReturned;
+}
+
+//static
 std::string protocolCom::save(std::unique_ptr<aTodo> & todoIn){
    std::string out;
    boost::iostreams::stream<boost::iostreams::back_insert_device<std::string>>os(out);
